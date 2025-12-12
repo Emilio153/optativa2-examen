@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  db:
+    image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dawpizza
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3311:3306"
+    volumes:
+      - dbdata:/var/lib/mysql/data
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    ports:
+      - 8093:80
+    depends_on:
+      - db
+volumes:
+  dbdata:
+  

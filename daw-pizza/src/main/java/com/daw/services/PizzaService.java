@@ -14,6 +14,8 @@ public class PizzaService {
 	
 	@Autowired
 	private PizzaRepository pizzaRepository;
+	@Autowired
+    private com.daw.persistence.repositories.OfertaRepository ofertaRepository;
 	
 	public List<Pizza> findAll(){
 		return this.pizzaRepository.findAll();
@@ -56,5 +58,14 @@ public class PizzaService {
 		
 		this.pizzaRepository.deleteById(idPizza);
 	}
+	// Nuevo método para el Ejercicio 3
+    public com.daw.services.dto.PizzaConOfertaDTO findByIdWithOferta(int idPizza) {
+        Pizza pizza = this.findById(idPizza); // Reusa el método existente que lanza excepción
+        
+        java.util.Optional<com.daw.persistence.entities.Oferta> ofertaActiva = 
+            this.ofertaRepository.findByIdPizzaAndActivaTrue(idPizza);
+            
+        return new com.daw.services.dto.PizzaConOfertaDTO(pizza, ofertaActiva.orElse(null));
+    }
 
 }

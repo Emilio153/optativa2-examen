@@ -24,16 +24,6 @@ INSERT INTO pizza (nombre, descripcion, precio, disponible, vegana, vegetariana)
 ('Carbonara', 'Bacon, cebolla, crema y mozzarella', 8.50, true, false, false),
 ('Mexicana', 'Jalapeños, carne, mozzarella, tomate', 9.00, true, false, false);
 
--- Inserciones en la tabla oferta (NUEVO PARA EL EXAMEN)
--- Recordatorio: id_pizza 1 es Margarita, id_pizza 4 es Barbacoa, etc.
-INSERT INTO oferta (nombre, activa, descuento, id_pizza) VALUES
-('Promo Margarita', true, 10.00, 1),      -- Oferta ACTIVA para Margarita (10% descuento)
-('Margarita Caducada', false, 50.00, 1),  -- Oferta INACTIVA para Margarita
-('Black Friday', true, 20.00, 2),         -- Oferta ACTIVA para Pepperoni
-('Promo Verano', false, 15.00, 2),        -- Oferta INACTIVA para Pepperoni
-('Barbacoa Lovers', true, 25.00, 4),      -- Oferta ACTIVA para Barbacoa
-('Sin IVA', false, 21.00, 4);             -- Oferta INACTIVA para Barbacoa
-
 -- Inserciones en la tabla pedido
 INSERT INTO pedido (id_cliente, fecha, total, metodo, notas) VALUES
 (1, '2025-11-01 20:15:00', 22.50, 'RECOGER', 'Sin cebolla en la pizza'),

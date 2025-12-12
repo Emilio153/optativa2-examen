@@ -25,6 +25,9 @@ public class PizzaController {
 	
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+    private com.daw.persistence.repositories.OfertaRepository ofertaRepository;
 
 	@GetMapping
 	public ResponseEntity<List<Pizza>> list(){
@@ -32,14 +35,15 @@ public class PizzaController {
 	}
 	
 	@GetMapping("/{idPizza}")
-	public ResponseEntity<?> findById(@PathVariable int idPizza){
-		try {
-			return ResponseEntity.ok(this.pizzaService.findById(idPizza));
-		}
-		catch(PizzaNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-		}
-	}
+    public ResponseEntity<?> findById(@PathVariable int idPizza){
+        try {
+            // CAMBIO: Ahora llama al método que devuelve DTO
+            return ResponseEntity.ok(this.pizzaService.findByIdWithOferta(idPizza));
+        }
+        catch(PizzaNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Pizza pizza){
@@ -74,5 +78,7 @@ public class PizzaController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
+	
+
 	
 }

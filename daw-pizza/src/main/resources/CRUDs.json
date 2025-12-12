@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "examen-daw-super-completo",
+		"name": "Examen DAW Pizza - TODO INCLUIDO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "--- 1. GESTIÓN DE OFERTAS (EXAMEN) ---",
+			"item": [
+				{
+					"name": "Listar Ofertas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/ofertas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "ofertas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Oferta (Se activa sola)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Oferta Examen\",\r\n    \"descuento\": 50.0,\r\n    \"idPizza\": 3\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/ofertas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "ofertas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Oferta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Promo Margarita EDITADA\",\r\n    \"activa\": true,\r\n    \"descuento\": 12.5,\r\n    \"idPizza\": 1\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/ofertas/1",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "ofertas", "1" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Oferta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/ofertas/2",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "ofertas", "2" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activar Oferta (Endpoint especial)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/ofertas/4/activar",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "ofertas", "4", "activar" ]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "--- 2. CRUD DE PIZZAS (TUS NUEVOS) ---",
+			"item": [
+				{
+					"name": "Obtener todas las pizzas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/pizzas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pizzas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener pizzas por ID (Con Oferta)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/pizzas/1",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pizzas", "1" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear pizza",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Pizza Nueva\",\r\n    \"descripcion\": \"Creada desde postman\",\r\n    \"precio\": 10.50,\r\n    \"disponible\": true,\r\n    \"vegana\": false,\r\n    \"vegetariana\": true\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/pizzas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pizzas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar pizza",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Margarita Modificada\",\r\n    \"descripcion\": \"Tomate, mozzarella\",\r\n    \"precio\": 9.50,\r\n    \"disponible\": true,\r\n    \"vegana\": false,\r\n    \"vegetariana\": true\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/pizzas/1",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pizzas", "1" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar pizza por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/pizzas/2",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pizzas", "2" ]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "--- 3. PEDIDOS Y PRECIOS (EXAMEN) ---",
+			"item": [
+				{
+					"name": "Añadir Pizza a Pedido (Aplica Oferta)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPizza\": 1,\r\n    \"cantidad\": 2\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/pedidos/1/pizzas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pedidos", "1", "pizzas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pizzas de un Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/pedidos/1/pizzas",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pedidos", "1", "pizzas" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar cantidad Pizza",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPizza\": 1,\r\n    \"cantidad\": 5\r\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": {
+							"raw": "http://localhost:8092/pedidos/1/pizzas/1",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pedidos", "1", "pizzas", "1" ]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar línea de pedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/pedidos/1/pizzas/2",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "pedidos", "1", "pizzas", "2" ]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "--- 4. CLIENTES (NUEVO) ---",
+			"item": [
+				{
+					"name": "Obtener todos los clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8092/clientes",
+							"protocol": "http",
+							"host": [ "localhost" ],
+							"port": "8092",
+							"path": [ "clientes" ]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

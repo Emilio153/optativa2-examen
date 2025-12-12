@@ -1,12 +1,15 @@
 package com.daw.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.daw.persistence.entities.Oferta;
 import com.daw.persistence.entities.Pizza;
 import com.daw.persistence.entities.PizzaPedido;
+import com.daw.persistence.repositories.OfertaRepository;
 import com.daw.persistence.repositories.PizzaPedidoRepository;
 import com.daw.services.dto.PizzaPedidoInputDTO;
 import com.daw.services.dto.PizzaPedidoOutputDTO;
@@ -22,6 +25,10 @@ public class PizzaPedidoService {
 	
 	@Autowired
 	private PizzaService pizzaService;
+
+    // INYECCIÓN NECESARIA PARA EL EJERCICIO 4
+    @Autowired
+    private OfertaRepository ofertaRepository;
 	
 	public List<PizzaPedido> findAll(){
 		return this.pizzaPedidoRepository.findAll();
@@ -37,7 +44,6 @@ public class PizzaPedidoService {
 	
 	public PizzaPedido create(PizzaPedido pizzaPedido) {
 		pizzaPedido.setId(0);
-		
 		return this.pizzaPedidoRepository.save(pizzaPedido);
 	}
 	
@@ -82,11 +88,10 @@ public class PizzaPedidoService {
 		entity.setId(0);
 		
 		Pizza pizza = this.pizzaService.findById(entity.getIdPizza());
-		entity.setPrecio(entity.getCantidad() * pizza.getPrecio());
 		
-		//Cuando ejecutamos el save, no vienen las entidades relacionadas (pizza y pedido), por lo que
-		//tenemos que ponersela para que no lance un NullPointerException en el Mapper cuando queramos
-		//hacer pizzaPedido.getPizza().getNombre()
+        // CAMBIO EJERCICIO 4: Calcular precio usando lógica de ofertas
+		entity.setPrecio(this.calcularPrecioFinal(pizza, entity.getCantidad()));
+		
 		entity.setPizza(pizza);
 		
 		return PizzaPedidoMapper.toDTO(this.pizzaPedidoRepository.save(entity));
@@ -103,11 +108,29 @@ public class PizzaPedidoService {
 		pizzaPedidoBD.setCantidad(dto.getCantidad());
 		
 		Pizza pizza = this.pizzaService.findById(dto.getIdPizza());
-		pizzaPedidoBD.setPrecio(dto.getCantidad() * pizza.getPrecio());
+		
+        // CAMBIO EJERCICIO 4: Calcular precio usando lógica de ofertas
+		pizzaPedidoBD.setPrecio(this.calcularPrecioFinal(pizza, dto.getCantidad()));
 		
 		pizzaPedidoBD.setPizza(pizza);
 		
 		return PizzaPedidoMapper.toDTO(this.pizzaPedidoRepository.save(pizzaPedidoBD));
 	}
+
+    // MÉTODO AUXILIAR PRIVADO PARA LÓGICA DE OFERTAS
+    private double calcularPrecioFinal(Pizza pizza, double cantidad) {
+        double precioUnitario = pizza.getPrecio();
+
+        // Buscamos si hay oferta activa para esta pizza
+        Optional<Oferta> ofertaActiva = this.ofertaRepository.findByIdPizzaAndActivaTrue(pizza.getId());
+
+        if (ofertaActiva.isPresent()) {
+            double descuentoPorcentaje = ofertaActiva.get().getDescuento();
+            // Aplicamos el descuento al precio unitario
+            precioUnitario = precioUnitario - (precioUnitario * (descuentoPorcentaje / 100));
+        }
+
+        return precioUnitario * cantidad;
+    }
 	
 }
